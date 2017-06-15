@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyApp</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/MyJSLib.js"></script>
+    <script type="text/javascript" src="js/MySensor.js"></script>
+    <script type="text/javascript">
+        function myUpdateUI(nam) {
+            if (nam == "init") {
+                myUpdateProgressBar();
+                myUpdateButton();
+                myUpdateTable();
+            } else if (nam == "samp_ls") {
+                myUpdateTable();
+            } else if (nam == "succ_num") {
+                myUpdateProgressBar();
+            } else if (nam == "trained") {
+                myUpdateProgressBar();
+                myUpdateButton();
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarid">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">MyApp</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarid">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="user.html">用户信息</a></li>
+            <li><a href="stat.html">数据统计</a></li>
+            <li><a href="log.html">监控日志</a></li>
+            <li><a href="debug.html">调试显示</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row" style="margin-bottom: 20px" id="buttons">
+    <div class="col-xs-offset-1 col-xs-4">
+        <button class="btn btn-primary" id="start">开始测试</button>
+    </div>
+    <div class="col-xs-offset-2 col-xs-4">
+        <button class="btn btn-primary" id="stop">结束测试</button>
+    </div>
+    <script type="text/javascript">
+        $("#start").on("click", function () {
+            myPutLclStor("running", true);
+            myCollectData();
+        });
+        $("#stop").on("click", function () {
+            myPutLclStor("running", false);
+        });
+        function myUpdateButton() {
+            var trained = myGetLclStor("trained");
+            if (! trained) {
+                $("#buttons").hide();
+            } else {
+                $("#buttons").show();
+            }
+        }
+    </script>
+</div>
+
+<div class="progress">
+    <div class="progress-bar progress-bar-striped active" id="progress_bar">
+        <script>
+            function myUpdateProgressBar() {
+                var succ_num = myGetLclStor("succ_num");
+                var trained = myGetLclStor("trained");
+                var progbar = $("#progress_bar");
+                var perc = succ_num * 10;
+                if (perc < 100) {
+                    progbar.css("width", perc + "%").text(perc + "% Train Data Uploaded !");
+                } else {
+                    progbar.css("width", "100%");
+                    if (! trained) {
+                        progbar.text("Train Model Computing ...");
+                    } else {
+                        progbar.text("Train Model Computed !")
+                    }
+                }
+            }
+        </script>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        数据统计
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover" id="statistics">
+            <thead>
+                <tr>
+                    <th>采样编号</th>
+                    <th>采样时间</th>
+                    <th>采样上传</th>
+                    <th>判定结果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <script>
+                    function myUpdateTable() {
+                        $("#statistics tbody").empty();
+                        var samp_ls = myGetLclStor("samp_ls");
+                        for (var idx in samp_ls) {
+                            var samp = samp_ls[idx];
+                            $("#statistics tbody")
+                                .append($("<tr>")
+                                    .append($("<td>").text(samp.num))
+                                    .append($("<td>").text(samp.tim))
+                                    .append($("<td>").text(samp.sof ? "成功" : "失败"))
+                                    .append($("<td>").text(samp.res)));
+                        }
+                    }
+                </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

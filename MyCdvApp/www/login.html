@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyCdvApp</title>
+        <meta charset="UTF-8">
+            <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: gap:">
+                <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+                    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+                        <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+                        <script type="text/javascript" src="js/bootstrap.js"></script>
+                        <script type="text/javascript">
+                            //当程序启动时，会自动进入这个界面，首先会确认下是否已经注册过，注册过就跳转至下个界面
+                            function onDeviceReady() {
+                                MyUtilities.mIsUserExist();
+                            }
+                        </script>
+                        <script type="text/javascript" src="js/MyStdLib.js"></script>
+                        <script type="text/javascript" src="cordova.js"></script>
+                        </head>
+    <body>
+        
+        <div class="container-fluid">
+            
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarid">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">MyApp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarid">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">用户信息</a></li>
+                        <li><a href="#">数据统计</a></li>
+                        <li><a href="#">监控日志</a></li>
+                        <li><a href="#">调试显示</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <form>
+                <div class="form-group">
+                    <label for="username">用户账号</label>
+                    <input type="text" class="form-control" id="username" name="unam">
+                        <label for="password">用户密码</label>
+                        <input type="password" class="form-control" id="password" name="pswd">
+                            <label for="confirm">确认密码</label>
+                            <input type="password" class="form-control" id="confirm" name="cnfm">
+                                </div>
+                <button type="button" class="btn btn-primary" onclick="myCheck()">用户注册</button>
+                <script type="text/javascript">
+                    //注册用户
+                function myCheck() {
+                    var lUsername = $("#username").val(),
+                    lPassword = $("#password").val(),
+                    lConfirm = $("#confirm").val();
+                    if (! (lUsername && lPassword)) {
+                        alert("用户账号或密码不能为空!");
+                    } else if (lPassword != lConfirm) {
+                        alert("两次输入密码不匹配!");
+                    } else {
+                        MyUtilities.mSetUserInfo([lUsername, lPassword]);
+                        MyUtilities.mIsUserExist();           
+                    }
+                }
+                </script>
+            </form>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,21 @@
+系统通过html界面调用javascrpt来调用swift的接口。javascript接口在cordova-plugin-utilities/www/MyUtilities.js中定义，具体实现在Plugins/codorva-plugin-utilities/MyCdvUtilities.swift中。
+
+Html的代码主要为两个在
+
+	www／js／log.html 
+		这个文件是当系统登录完成以后的界面包含一个button，以及log信息。
+	www/js/login.html
+		这个文件是当系统登录时的界面，以及两个响应函数，当已经有用户存在的时候，会直接跳转到log界面，否则会要求用户输入账户密码，然后将密码上传到服务器验证是否正确登录。
+
+
+界面按钮等响应的接口实现在以下两个文件中
+
+	Plugins/codorva-plugin-utilities/MyCdvUtilities.swift
+		这个文件是js的函数的具体实现，代码实现了所有button以及界面的响应事件的接口，通过接口可以进入代码主逻辑。
+	cordova-plugin-utilities/www/MyUtilities.js
+		这个文件是js的代码接口，定义了代码的接口在swift中的形态，并将在MyCdvUtilities.swift中具体定义，这个定义是一个形式化的定义。
+
+代码主要逻辑在MyClient.swift中定义
+ 
+	MyCdvApp/MyClient.swfit
+		MyClient.swfit通过定义状态机来响应所有情况。状态包括IDLE, COLLECT, SAVE, UPLOAD, ASK, QUERY, CHECK, FIX。每当系统响应完一个操作时，会发送一个Notification（类似于安卓的广播），MyClient会捕获这个广播，然后通过不同的状体的广播响应不同的事件。具体函数的响应列表可以参见代码（MyClient.swift）

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyCdvApp</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: gap:">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript">
+        function onDeviceReady() {
+            myLog(DEBUG, "DeviceReady");
+            MyUtilities.mRegisterLogListener();
+            MyUtilities.mRegisterAppStateListener();
+            MyUtilities.mRegisterModelStateListener();
+            MyUtilities.mRegisterAlertMessageListener();
+            MyUtilities.mGetUserInfo();
+        }
+    </script>
+    <script type="text/javascript" src="js/MyStdLib.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+</head>
+<body style="padding-top: 70px">
+<div class="container-fluid">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">MyCdvApp</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#loglvl">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="loglvl">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">XXX</a></li>
+            <li><a href="#">YYY</a></li>
+            <li><a href="#">ZZZ</a></li>
+        </ul>
+    </div>
+</nav>
+
+<form class="form-horizontal">
+    <div class="form-group text-center">
+        <p class="form-control-static" id="text">Model Not Exist</p>
+    </div>
+    <div class="form-group text-center">
+        <button type="button" class="btn btn-primary" id="button">Idle</button>
+        <script type="text/javascript">
+            $("#button").on("click", function () {
+                MyUtilities.mStart();
+            });
+        </script>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-6 text-right">
+            <label class="control-label" for="source">Data Source</label>
+        </div>
+        <div class="col-xs-4">
+            <select class="form-control" id="source">
+                <option>Phone</option>
+                <option>Watch</option>
+            </select>
+            <script type="application/javascript">
+                $("#source").on("change", function () {
+                    MyUtilities.mSetDataSource($("#source").val());
+                });
+            </script>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-6 text-right">
+            <label class="control-label" for="mode">Detect Mode</label>
+        </div>
+        <div class="col-xs-4">
+            <select class="form-control" id="mode">
+                <option>Online</option>
+                <option>Offline</option>
+            </select>
+            <script type="application/javascript">
+                $("#mode").on("change", function () {
+                    MyUtilities.mSetDetectMode($("#mode").val());
+                });
+            </script>
+        </div>
+    </div>
+</form>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <span class="panel-title">Console</span>
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary btn-xs">Action</button>
+            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Debug</a></li>
+                <li><a href="#">Info</a></li>
+                <li><a href="#">Error</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Clear</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group" id="console">
+
+        </ul>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

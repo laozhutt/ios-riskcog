@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FX1-di-rrw">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="r11-Kn-slj">
+            <objects>
+                <controller id="FX1-di-rrw" customClass="InterfaceController" customModule="MyCdvApp_WatchKit_Extension">
+                    <items>
+                        <dateLabel alignment="left" format="MM-dd HH:mm:ss" id="3dh-1n-Q8d">
+                            <date key="previewedDate" timeIntervalSinceReferenceDate="432018722">
+                                <!--2014-09-10 05:12:02 +0000-->
+                            </date>
+                        </dateLabel>
+                        <separator alignment="left" id="xFK-5I-QLA"/>
+                        <label width="1" alignment="left" numberOfLines="0" id="sNs-2t-Zdy"/>
+                    </items>
+                    <connections>
+                        <outlet property="mLabel" destination="sNs-2t-Zdy" id="0El-x8-Ki2"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="34" y="161"/>
+        </scene>
+    </scenes>
+</document>
