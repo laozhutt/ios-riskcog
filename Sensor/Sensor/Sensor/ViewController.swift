@@ -14,6 +14,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        lblUserName.text = IMEI.shared.value
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,6 +45,7 @@ class ViewController: UIViewController {
     }
     
     var imeiString: String?
+    @IBOutlet weak var lblUserName: UILabel!
 }
 
 // MARK: - Segue

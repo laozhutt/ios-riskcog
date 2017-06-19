@@ -30,11 +30,11 @@ function onAppStateChanged(pStat) {
 const NONE = 1, SIT_MODEL_EXIST = 2, WALK_MODEL_EXIST = 3, MODEL_EXIST = 4, SIT_TRAINED = 5, WALK_TRAINED = 6, TRAINED = 7;
 function onModelStateChanged(pStat) {
     var lTxt = pStat == NONE ? "Model Not Exist"
-        : pStat == SIT_MODEL_EXIST ? "Sit Model Exist"
-        : pStat == WALK_MODEL_EXIST ? "Walk Model Exist"
+        : pStat == SIT_MODEL_EXIST ? "Sit Model Exist, Walk Model don't Exist"
+        : pStat == WALK_MODEL_EXIST ? "Walk Model Exist, Sit Model don't Exist"
         : pStat == MODEL_EXIST ? "Sit, Walk Model Exist"
-        : pStat == SIT_TRAINED ? "Sit Model Trained"
-        : pStat == WALK_TRAINED ? "Walk Model Trained"
+        : pStat == SIT_TRAINED ? "Sit Model Trained, Walk Model don't Trained"
+        : pStat == WALK_TRAINED ? "Walk Model Trained, Sit Model don't Trained"
         : pStat == TRAINED ? "Sit, Walk Model Trained"
         : "Unknown State";
     $("#text").text(lTxt);
@@ -64,6 +64,7 @@ var gUsername, gPassword;
 function onUserInfoChanged(pInfo) {
     gUsername = pInfo[0];
     gPassword = pInfo[1];
+    $("#user").text(gUsername)
 }
 
 function onMonitorListChanged(pList) {

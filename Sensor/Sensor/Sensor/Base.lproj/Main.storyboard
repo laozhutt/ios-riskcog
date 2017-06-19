@@ -78,6 +78,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="lblUserName" destination="dkg-qm-qkW" id="aVp-nk-Ea1"/>
                         <segue destination="fFJ-x7-kUU" kind="show" identifier="identifyFail" id="VM0-ge-Bhm"/>
                         <segue destination="FlW-ch-X3J" kind="show" identifier="identifySucceed" id="tQW-2f-y1t"/>
                         <segue destination="Q7d-iW-quH" kind="presentation" identifier="inputIMEI" id="1cG-gK-krx"/>
@@ -293,7 +294,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zT4-s2-kwN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bB4-0J-3qD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bB4-0J-3qD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -316,7 +317,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Q7d-iW-quH" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4c3-qA-570">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4c3-qA-570">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -426,8 +427,8 @@
         <image name="apple_logo.png" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aeU-Bf-AaS"/>
+        <segue reference="VM0-ge-Bhm"/>
         <segue reference="5CH-sm-XpP"/>
-        <segue reference="hru-TX-7yN"/>
+        <segue reference="tQW-2f-y1t"/>
     </inferredMetricsTieBreakers>
 </document>

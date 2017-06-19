@@ -89,10 +89,10 @@ extension LoginViewController {
                             self.performSegue(withIdentifier: SegueIdentifiers.loginSucceed.rawValue, sender: nil)
                         }
                     } else {
-                        UserDefaults.standard.set(self.txtAccount.text!, forKey: "imei")
-                        UserDefaults.standard.synchronize()
                         self.dismiss(animated: true)
                     }
+                    UserDefaults.standard.set(self.txtAccount.text!, forKey: "imei")
+                    UserDefaults.standard.synchronize()
                 case 1:
                     print("密码错误")
                     let alert = UIAlertController(title: nil, message: "密码错误", preferredStyle: .alert)

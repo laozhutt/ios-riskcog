@@ -16,7 +16,7 @@ class MyClient: NSObject {
     var mDetectMode: MyDetectMode!
 
     //采集数据的数量15s 每秒采集50次
-    let DATA_COUNT_MAX = 50 * 15
+    let DATA_COUNT_MAX = 50 * 3
     var mDataCount: Int!
     var mAccelerationData: [Double]!
     var mRotationRateData: [Double]!
@@ -211,29 +211,42 @@ class MyClient: NSObject {
                     if pDataResponse.result.isSuccess {
                         var lRes = pDataResponse.result.value as! [String: Any]
                         myLog(INFO, "\(lRes)")
+                        print (lRes)
                         var lVersion: String
-                        var lResult : String
+                        var lResult : String = "-1"
                         
-                        lResult = String(lRes["result"] as! Int)
-                        if (lResult=="-1") {
+                        //lResult = String(lRes["result"] as! Int)
+                        //lVersion = String(lRes["max_version"] as! Int)
+                        //print (lResult)
+                        
+                        
+                        if (!(lRes.keys.contains("result") || lRes.keys.contains("max_version"))) {
                             self.mAppState = .IDLE
                             NotificationCenter.default.post(name: .MyCdvAppStateChanged, object: self.mAppState)
                         }else {
-                        
-                            switch self.mModelState! {
-                            case .NONE, .SIT_MODEL_EXIST, .WALK_MODEL_EXIST, .MODEL_EXIST, .SIT_TRAINED, .WALK_TRAINED:
-                                self.mAppState = .ASK
-                                if self.mPath == "/train/" {
-                                    lVersion = String(lRes["numfiles"] as! Int)
-                                } else /* if path == "/test/" */ {
-                                    lVersion = String(lRes["max_version"] as! Int)
-                                }
-                            case .TRAINED:
-                                self.mAppState = .QUERY
-                                lVersion = String(lRes["max_version"] as! Int)
+                            if (lRes.keys.contains("result")){
+                                lResult = String(lRes["result"] as! Int)
                             }
+                            if (lRes.keys.contains("result") && lResult == "-1"){
+                                self.mAppState = .IDLE
+                                NotificationCenter.default.post(name: .MyCdvAppStateChanged, object: self.mAppState)
+                            }else {
+                                switch self.mModelState! {
+                                case .NONE, .SIT_MODEL_EXIST, .WALK_MODEL_EXIST, .MODEL_EXIST, .SIT_TRAINED, .WALK_TRAINED:
+                                    self.mAppState = .ASK
+                                    if self.mPath == "/train/" {
+                                        lVersion = String(lRes["numfiles"] as! Int)
+                                    } else /* if path == "/test/" */ {
+                                        lVersion = String(lRes["max_version"] as! Int)
+                                    }
+                                case .TRAINED:
+                                    self.mAppState = .QUERY
+                                    lVersion = String(lRes["max_version"] as! Int)
+                                    print (lVersion)
+                                }
                         
                             NotificationCenter.default.post(name: .MyCdvAppStateChanged, object: self.mAppState, userInfo: ["version": lVersion])
+                            }
                         }
                     } else {
                         myLog(ERROR, "\(pDataResponse.result.error!)")
@@ -308,6 +321,9 @@ class MyClient: NSObject {
     
 //查询结果
     func mQueryData(_ pVersion: String, _ pCount: Int) {
+        print ("xxx")
+        print (pVersion)
+        
         upload(multipartFormData: {
             (pMultipartFormData: MultipartFormData) in
             pMultipartFormData.append(self.mUsername.data(using: .utf8)!, withName: "imei")
